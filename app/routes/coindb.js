@@ -41,23 +41,23 @@ router.post('/dashboard', requireToken, (req, res, next) => {
         vwap24Hr: req.body.info.vwap24Hr,
         owner: req.body.info.owner
     })
-    .catch(next)
+        .catch(next)
 })
 
 // INDEX
 // GET /examples
-router.get('/dashboard', requireToken, (req, res, next) => {
-	Saved.find()
-		.then((coins) => {
-			// `examples` will be an array of Mongoose documents
-			// we want to convert each one to a POJO, so we use `.map` to
-			// apply `.toObject` to each one
-			return coins.map((coin) => console.log('This is a coin: ', coin.toObject()))
-		})
-		// respond with status 200 and JSON of the examples
-		.then((coins) => res.status(200).json({ coins: coins }))
-		// if an error occurs, pass it to the handler
-		.catch(next)
+router.get('/dashboard', (req, res, next) => {
+    Saved.find()
+        .then((coins) => {
+            // `examples` will be an array of Mongoose documents
+            // we want to convert each one to a POJO, so we use `.map` to
+            // apply `.toObject` to each one
+            return coins.map((coin) => coin.toObject())
+        })
+        // respond with status 200 and JSON of the examples
+        .then((coins) => res.status(200).json({ coins: coins }))
+        // if an error occurs, pass it to the handler
+        .catch(next)
 })
 
 module.exports = router
