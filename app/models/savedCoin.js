@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 
 const savedCoinSchema = new mongoose.Schema(
 	{
+        id: {
+            type: String,
+        },
 		rank: {
 			type: String,
 		},
