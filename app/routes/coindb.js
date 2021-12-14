@@ -29,6 +29,7 @@ const router = express.Router()
 router.post('/dashboard', requireToken, (req, res, next) => {
     req.body.info.owner = req.user.id
     Saved.create({
+        id: req.body.info.id,
         symbol: req.body.info.symbol,
         marketCapUsd: req.body.info.marketCapUsd,
         maxSupply: req.body.info.maxSupply,
