@@ -60,4 +60,14 @@ router.get('/dashboard', (req, res, next) => {
         .catch(next)
 })
 
+// DELETE Route for Saved Coins
+router.delete('/dashboard/:id', (req, res, next) => {
+    Saved.findOneAndDelete({
+        _id: req.params.id
+    })
+    .catch(err => {
+        console.log('Failed to delete: ', err)
+    })
+})
+
 module.exports = router
