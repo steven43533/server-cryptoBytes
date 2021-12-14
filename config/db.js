@@ -6,7 +6,7 @@ const mongooseBaseName = 'crypto-bytes'
 
 // create the mongodb uri for development and test
 const database = {
-	development: `mongodb://127.0.0.1:27017/${mongooseBaseName}-development`,
+	development: `mongodb://localhost:27017/${mongooseBaseName}-development`,
 	test: `mongodb://localhost/${mongooseBaseName}-test`,
 }
 
