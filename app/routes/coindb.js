@@ -47,13 +47,18 @@ router.post('/dashboard', requireToken, (req, res, next) => {
 
 // INDEX
 // GET /examples
-router.get('/dashboard', (req, res, next) => {
+router.get('/dashboard', requireToken, (req, res, next) => {
     Saved.find()
         .then((coins) => {
+            console.log("is this working?", coins)
+            const userCoins = coins.filter(coin => coin.owner.toString() === req.user.id)
+            console.log("user coins!", userCoins)
             // `examples` will be an array of Mongoose documents
             // we want to convert each one to a POJO, so we use `.map` to
             // apply `.toObject` to each one
-            return coins.map((coin) => coin.toObject())
+
+            // map over user coins instead of coins
+            return userCoins.map((coin) => coin.toObject())
         })
         // respond with status 200 and JSON of the examples
         .then((coins) => res.status(200).json({ coins: coins }))
