@@ -18,6 +18,7 @@ const BadCredentialsError = errors.BadCredentialsError
 
 const Saved = require('../models/savedCoin')
 const commentSchema = require('../models/comment')
+const { ObjectId } = require('mongodb')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -50,6 +51,26 @@ router.post('/dashboard/comment/:coinName', requireToken, (req, res, next) => {
         }
     )
     .catch(next)
+})
+
+// DELETE Route for Saved Coins
+router.delete('/dashboard/comment/:id', (req, res, next) => {
+    console.log("Deleting comment from database")
+    console.log("ID of comment", req.params.id)
+    console.log("This is the matchedCoin id :", req.body.matchedCoin[0]._id)
+    Saved.updateOne({
+        "_id": ObjectId(req.body.matchedCoin[0]._id)
+    },
+    {
+        "$pull": {
+            "comments": {
+                "_id": ObjectId(req.params.id)
+            }
+        }
+    })
+    .catch(err => {
+        console.log('Failed to delete: ', err)
+    })
 })
 
 module.exports = router
