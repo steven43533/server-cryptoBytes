@@ -38,7 +38,6 @@ router.post('/dashboard/comment/:coinName', requireToken, (req, res, next) => {
     // console.log('THi is EEEE:', typeof req.body.content)
     // console.log(`These should match: ${typeof req.body.matchedCoin.owner} and ${typeof req.body.user._id}`)
     Saved.findById(req.body.matchedCoin[0]._id)
-    
     .then(coin => {
         coin.comments.push({ content: req.body.content })
         return coin.save()
