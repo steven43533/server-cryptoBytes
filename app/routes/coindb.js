@@ -42,28 +42,13 @@ router.post('/dashboard', requireToken, (req, res, next) => {
         vwap24Hr: req.body.info.vwap24Hr,
         owner: req.body.info.owner
     })
+    .then(addedCoin => {
+        res.json({coinAdded: 'this coin was favorited', addedCoin})
+    })
         .catch(next)
 })
 
 // INDEX
-// GET /examples
-
-// router.get('/dashboard', requireToken, (req, res, next) => { 
-//     fetch(`https://api.coincap.io/v2/assets`, {
-//         headers: {
-//             "Authorization": `Bearer ${process.env.API_KEY}`
-//             // "Access-Control-Allow-Origin":"*",
-//             // "Access-Control-Allow-Credentials": true,
-//             // "Access-Control-Allow-Methods": "GET",
-//             // "accept": "application/json",
-//             // "x-requested-with": "xmlhttprequest"
-//         }
-//     }).then(resp => {
-//         console.log('Response:\n', resp.data)
-//         res.json(resp.data)
-//     })
-//     .catch(next)
-// })
 
 router.get('/dashboard', requireToken, (req, res, next) => {
     Saved.find()
@@ -88,6 +73,9 @@ router.get('/dashboard', requireToken, (req, res, next) => {
 router.delete('/dashboard/:id', (req, res, next) => {
     Saved.findOneAndDelete({
         _id: req.params.id
+    })
+    .then(deletedCoin => {
+        res.json({message: 'coin was deleted', deletedCoin})
     })
     .catch(err => {
         console.log('Failed to delete: ', err)
