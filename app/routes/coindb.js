@@ -27,6 +27,7 @@ const router = express.Router()
 
 // POST (create) route to add a coin to our followed list
 router.post('/dashboard', requireToken, (req, res, next) => {
+    console.log('Di this hi')
     req.body.info.owner = req.user.id
     Saved.create({
         id: req.body.info.id,
@@ -43,7 +44,7 @@ router.post('/dashboard', requireToken, (req, res, next) => {
         owner: req.body.info.owner
     })
     .then(addedCoin => {
-        res.json({coinAdded: 'this coin was favorited', addedCoin})
+        res.json({ message: "Coin added", addedCoin})
     })
         .catch(next)
 })
@@ -74,8 +75,9 @@ router.delete('/dashboard/:id', (req, res, next) => {
     Saved.findOneAndDelete({
         _id: req.params.id
     })
+    // this .then with the res is what's being sent to client
     .then(deletedCoin => {
-        res.json({message: 'coin was deleted', deletedCoin})
+        res.json({ message: "Deleted Coin", deletedCoin})
     })
     .catch(err => {
         console.log('Failed to delete: ', err)
