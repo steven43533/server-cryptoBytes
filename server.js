@@ -8,7 +8,7 @@ const exampleRoutes = require('./app/routes/example_routes')
 const userRoutes = require('./app/routes/user_routes')
 const coindb = require('./app/routes/coindb')
 const commentdb = require('./app/routes/commentdb')
-
+const coincap = require('./app/routes/coinCap')
 // require middleware
 const errorHandler = require('./lib/error_handler')
 const replaceToken = require('./lib/replace_token')
@@ -71,10 +71,7 @@ app.use(exampleRoutes)
 app.use(userRoutes)
 app.use(coindb)
 app.use(commentdb)
-
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-})
+app.use(coincap)
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
 // passed any error messages from them

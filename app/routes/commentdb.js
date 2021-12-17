@@ -55,7 +55,7 @@ router.post('/dashboard/comment/:coinName', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-// DELETE Route for Saved Coins
+// DELETE Route for Comments
 router.delete('/dashboard/comment/:id', (req, res, next) => {
     console.log("Deleting comment from database")
     console.log("ID of comment", req.params.id)

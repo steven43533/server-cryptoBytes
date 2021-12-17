@@ -44,15 +44,9 @@ router.post('/dashboard', requireToken, (req, res, next) => {
         owner: req.body.info.owner
     })
     .then(addedCoin => {
-<<<<<<< HEAD
         res.json({ message: "Coin added", addedCoin})
     })
         .catch(next)
-=======
-        res.json({coinAdded: 'this coin was added: ', addedCoin})
-    })
-    .catch(next)
->>>>>>> c152d229529252720dbb4c639bd588cb2fa9c340
 })
 
 // INDEX
@@ -81,14 +75,9 @@ router.delete('/dashboard/:id', (req, res, next) => {
     Saved.findOneAndDelete({
         _id: req.params.id
     })
-<<<<<<< HEAD
     // this .then with the res is what's being sent to client
     .then(deletedCoin => {
         res.json({ message: "Deleted Coin", deletedCoin})
-=======
-    .then(deletedCoin => {
-        res.json({message: 'coin was deleted: ', deletedCoin})
->>>>>>> c152d229529252720dbb4c639bd588cb2fa9c340
     })
     .catch(err => {
         console.log('Failed to delete: ', err)
