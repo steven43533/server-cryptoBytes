@@ -25,6 +25,9 @@ const { ObjectId } = require('mongodb')
 // it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
 
+// this is middleware that will remove blank fields from `req.body`, e.g.
+// { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
+const removeBlanks = require('../../lib/remove_blank_fields')
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
@@ -71,6 +74,26 @@ router.delete('/dashboard/comment/:id', (req, res, next) => {
     .catch(err => {
         console.log('Failed to delete: ', err)
     })
+})
+
+// EXAMPLE PATCH ROUTE (Look at the route in Example routes for UNEDITED version)
+// UPDATE
+// PATCH /examples/5a7db6c74d55bc51bdf39793
+router.patch('/dashboard/comment/:id', (req, res, next) => {
+	// if the client attempts to change the `owner` property by including a new
+	// owner, prevent that by deleting that key/value pair
+	// delete req.body.example.owner
+
+	Saved.findOneAndUpdate({ "_id": req.body.matchedCoin[0]._id,
+        "comments._id": req.body.comments._id}, {
+            "$set" : {
+                "comments.$" : { content: req.body.comments.content }
+            }
+        })
+		// .then(handle404)
+		.then(() => res.sendStatus(204))
+		// if an error occurs, pass it to the handler
+		.catch(next)
 })
 
 module.exports = router

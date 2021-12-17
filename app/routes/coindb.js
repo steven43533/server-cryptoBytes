@@ -43,7 +43,10 @@ router.post('/dashboard', requireToken, (req, res, next) => {
         vwap24Hr: req.body.info.vwap24Hr,
         owner: req.body.info.owner
     })
-        .catch(next)
+    .then(addedCoin => {
+        res.json({coinAdded: 'this coin was added: ', addedCoin})
+    })
+    .catch(next)
 })
 
 // INDEX
@@ -71,6 +74,9 @@ router.get('/dashboard', requireToken, (req, res, next) => {
 router.delete('/dashboard/:id', (req, res, next) => {
     Saved.findOneAndDelete({
         _id: req.params.id
+    })
+    .then(deletedCoin => {
+        res.json({message: 'coin was deleted: ', deletedCoin})
     })
     .catch(err => {
         console.log('Failed to delete: ', err)
