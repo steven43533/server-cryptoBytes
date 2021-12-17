@@ -22,6 +22,7 @@ var config = {
     } 
 }
 router.get('/', (req, res, next) => {
+    console.log("ProccessENV", process.env.API_KEY)
     axios(config)
         .then(function(response) {
             //console.log('Response data:\n', JSON.stringify(response.data))
