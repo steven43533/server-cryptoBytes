@@ -70,6 +70,9 @@ router.delete('/dashboard/comment/:id', (req, res, next) => {
             }
         }
     })
+    .then(deletedComment => {
+        res.json({ message: 'This is the deleted comment ', deletedComment})
+    })
     .catch(err => {
         console.log('Failed to delete: ', err)
     })
