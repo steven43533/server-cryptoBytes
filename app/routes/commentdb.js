@@ -82,11 +82,11 @@ router.patch('/dashboard/comment/:id', (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
 	// delete req.body.example.owner
-
+    console.log('This is the req.body from the PUT route: ', req)
 	Saved.findOneAndUpdate({ "_id": req.body.matchedCoin[0]._id,
-        "comments._id": req.body.comments._id}, {
+        "comments._id": req.params.id}, {
             "$set" : {
-                "comments.$" : { content: req.body.comments.content }
+                "comments.$" : { content: req.body.editedContent }
             }
         })
 		// .then(handle404)
