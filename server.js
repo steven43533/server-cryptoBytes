@@ -32,7 +32,7 @@ const clientDevPort = 3000
 mongoose.connect(db, {
 	useNewUrlParser: true,
 })
-
+// Connection string for Atlas MongoDb cloud
 mongoose.connection.once('open', () => {
 	console.log(`Connected to MongoDb at ${mongoose.connection.host}:${mongoose.connection.port}`)
 })
